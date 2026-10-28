@@ -15,7 +15,7 @@ import pl.stud.Codebox.dto.UserRegisterResponse;
 import pl.stud.Codebox.service.AuthenticationService;
 import pl.stud.Codebox.service.JwtService;
 
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @RestController
 @RequiredArgsConstructor
 public class AuthenticationController {
