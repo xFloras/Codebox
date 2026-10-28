@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: Codebox
+  config:
+    import: optional:file:.env[.properties]
+
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/codebox_db}
+    username: ${SPRING_DATASOURCE_USERNAME:codebox_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:codebox_password}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+
+  rabbitmq:
+    host: ${SPRING_RABBITMQ_HOST:localhost}
+    port: ${SPRING_RABBITMQ_PORT:5672}
+    username: ${SPRING_RABBITMQ_USERNAME:guest}
+    password: ${SPRING_RABBITMQ_PASSWORD:guest}
+    listener:
+      simple:
+        concurrency: 2
+        max-concurrency: 4
+        prefetch: 1
+        default-requeue-rejected: false
+        retry:
+          enabled: true
+          max-retries: 3
+          initial-interval: 2s
+          multiplier: 2.0
+
+
+server:
+  port: 8080
+
+security:
+  jwt:
+    secret_key: ${SECURITY_JWT_SECRET_KEY}
+    expiration: ${SECURITY_JWT_EXPIRATION:3600000} # 1 hour
