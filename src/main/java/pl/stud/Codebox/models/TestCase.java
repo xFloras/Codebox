@@ -26,7 +26,7 @@ public class TestCase {
 
     @Column(name="is_sample", nullable = false)
     @Builder.Default
-    private Boolean Sample = false;
+    private Boolean sample = false;
 
     @Column(nullable = false)
     private Integer position;
