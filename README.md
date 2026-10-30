@@ -119,7 +119,7 @@ curl -X POST http://localhost:8080/api/problems \
 - [x] Project setup, Docker Compose (PostgreSQL, RabbitMQ, application)
 - [x] JWT authentication and registration
 - [x] Problem entity, create and fetch endpoints
-- [ ] Admin-only access for problem management
+- [x] Admin-only access for problem management
 - [ ] Test cases and submissions (entities, endpoints, statuses)
 - [ ] RabbitMQ producer and worker (dead-letter queue, retries)
 - [ ] Sandboxed code execution with TLE/MLE limits
