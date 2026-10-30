@@ -26,6 +26,7 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
+    //TODO: check if roles work properly now
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -35,8 +36,11 @@ public class SecurityConfig {
                         authorizeHttpRequests -> authorizeHttpRequests
                                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                                 .requestMatchers("/api/auth/**", "/error").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/problems/").hasAnyRole("ADMIN")
-                               // .requestMatchers(HttpMethod.DELETE, "/api/events/**").hasAnyRole("ADMIN", "ORGANISER")
+                                .requestMatchers(HttpMethod.POST, "/api/problems", "/api/problems/*/test-cases").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/problems/**", "/api/test-cases/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PATCH, "/api/problems/**", "/api/test-cases/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/problems/**", "/api/test-cases/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/test-cases/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/problems/**").authenticated()
                                 .anyRequest().authenticated()
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -50,7 +54,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:8080", "http://localhost:5173"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
 
