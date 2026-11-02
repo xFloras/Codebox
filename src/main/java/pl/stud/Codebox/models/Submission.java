@@ -13,6 +13,7 @@ import java.time.Instant;
 @Setter
 @ToString
 @Entity
+@Builder
 @Table(name = "submissions")
 public class Submission {
     @Id
@@ -28,14 +29,16 @@ public class Submission {
     private Problem problem;
 
     @Column(name = "language", nullable = false)
-    private String language;
+    @Enumerated(EnumType.STRING)
+    private Language language;
 
     @Column(columnDefinition = "TEXT", nullable = false)
     private String code;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status;
+    @Builder.Default
+    private Status status = Status.PENDING;
 
     @Column(name = "compiler_output", columnDefinition = "TEXT")
     private String compilerOutput;

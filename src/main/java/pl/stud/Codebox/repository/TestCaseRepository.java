@@ -13,7 +13,7 @@ import java.util.List;
 public interface TestCaseRepository extends JpaRepository<TestCase, Long> {
 
     List<TestCase> findByProblemAndSampleTrue(Problem problem);
-
+    List<TestCase> findByProblemOrderByPosition(Problem problem);
     /*
     * Returns the max position of the test cases with given problemId
     * Used to calculate the new position of the new test case

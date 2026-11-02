@@ -1,23 +1,33 @@
 package pl.stud.Codebox.service;
 
 
+import pl.stud.Codebox.dto.TestInput;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.Comparator;
+import java.util.List;
 
 
 public class SubmissionPreparer {
 
-    public static Path prepareSubmission(String userCode, String testCode) throws IOException {
-        Path tempDir = Files.createTempDirectory("submission_");
+    private static final Path SUBMISSIONS_ROOT = Path.of(System.getProperty("java.io.tmpdir"));
 
-        Path solutionPath = tempDir.resolve("Solution.java");
-        Path mainPath = tempDir.resolve("Main.java");
+    public static Path prepareSubmission(long submissionId, String userCode, List<TestInput> tests) throws IOException {
+        Path dir = SUBMISSIONS_ROOT.resolve("submission_" + submissionId);
+        cleanUp(dir);
+        Files.createDirectories(dir.resolve("inputs"));
+        Files.createDirectories(dir.resolve("out"));
 
-        Files.writeString(solutionPath, userCode);
-        Files.writeString(mainPath, testCode);
-        return tempDir;
+        Files.writeString(dir.resolve("Main.java"), userCode);
+
+
+        for(TestInput input : tests) {
+            Files.writeString(dir.resolve("inputs").resolve(input.position() + ".in"), input.input());
+        }
+
+        return dir;
 
     }
 
@@ -34,6 +44,6 @@ public class SubmissionPreparer {
     }
 
 
-    }
+}
 
 
