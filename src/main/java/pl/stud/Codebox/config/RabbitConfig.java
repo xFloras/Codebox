@@ -3,10 +3,10 @@ package pl.stud.Codebox.config;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@Configurable
+@Configuration
 public class RabbitConfig {
 
     public static final String EXCHANGE_NAME = "submissions";
@@ -14,11 +14,11 @@ public class RabbitConfig {
 
 
     @Bean
-    DirectExchange submissionsExchange() {
+    public DirectExchange submissionsExchange() {
         return new DirectExchange(EXCHANGE_NAME);
     }
     @Bean
-    DirectExchange deadLetterExchange() {
+    public DirectExchange deadLetterExchange() {
         return new DirectExchange(DLX_NAME);
     }
 
