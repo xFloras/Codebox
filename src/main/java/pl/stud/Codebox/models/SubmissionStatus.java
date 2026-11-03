@@ -1,8 +1,9 @@
 package pl.stud.Codebox.models;
 
-public enum Status {
+public enum SubmissionStatus {
     PENDING,
     RUNNING,
     SUCCESS,
     FAILED,
+    INTERNAL_ERROR,
 }
