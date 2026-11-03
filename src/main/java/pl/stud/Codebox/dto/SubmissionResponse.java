@@ -1,5 +1,5 @@
 package pl.stud.Codebox.dto;
 
-import pl.stud.Codebox.models.Status;
+import pl.stud.Codebox.models.SubmissionStatus;
 
-public record SubmissionResponse(Long id, String compilerOutput, Status status) { }
+public record SubmissionResponse(Long id, String compilerOutput, SubmissionStatus submissionStatus) { }

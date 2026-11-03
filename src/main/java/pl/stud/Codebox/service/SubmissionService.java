@@ -36,14 +36,13 @@ public class SubmissionService {
             submission.setCode(submissionRequest.code());
 
             Submission savedSubmission = submissionRepository.save(submission);
-
             events.publishEvent(new SubmissionCreatedEvent(savedSubmission.getId(), submissionRequest.language()));
 
             return toResponse(savedSubmission);
         }
 
         private SubmissionResponse toResponse(Submission submission) {
-                return new SubmissionResponse(submission.getId(), submission.getCompilerOutput(), submission.getStatus());
+                return new SubmissionResponse(submission.getId(), submission.getCompilerOutput(), submission.getSubmissionStatus());
         }
 
 
