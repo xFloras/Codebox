@@ -38,7 +38,7 @@ public class Submission {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    private Status status = Status.PENDING;
+    private SubmissionStatus status = SubmissionStatus.PENDING;
 
     @Column(name = "compiler_output", columnDefinition = "TEXT")
     private String compilerOutput;
@@ -46,8 +46,8 @@ public class Submission {
     @Column(name = "total_time_ms")
     private Integer totalTimeMs;
 
-    @Column(name = "max_memory_kb")
-    private Integer maxMemoryKb;
+    @Column(name = "max_memory_mb")
+    private Integer maxMemoryMb;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

@@ -42,7 +42,7 @@ public class SubmissionService {
         }
 
         private SubmissionResponse toResponse(Submission submission) {
-                return new SubmissionResponse(submission.getId(), submission.getCompilerOutput(), submission.getSubmissionStatus());
+                return new SubmissionResponse(submission.getId(), submission.getCompilerOutput(), submission.getStatus());
         }
 
 

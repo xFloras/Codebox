@@ -15,6 +15,6 @@ public class Sender {
     private final RabbitTemplate rabbitTemplate;
 
     public void send(Long submissionId, Language language) {
-        rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, language.toString(), new SubmissionMessage(submissionId));
+        rabbitTemplate.convertAndSend(RabbitConfig.EXCHANGE_NAME, language.toString().toLowerCase(), new SubmissionMessage(submissionId));
     }
 }

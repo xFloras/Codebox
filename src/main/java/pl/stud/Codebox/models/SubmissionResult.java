@@ -33,13 +33,13 @@ public class SubmissionResult {
 
     @Column(length = 30, nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Verdict status;
 
     @Column(name = "time_ms")
     private Integer timeMs;
 
-    @Column(name = "memory_kb")
-    private Integer memoryKb;
+    @Column(name = "memory_mb")
+    private Integer memoryMb;
 
     @Column(name = "actual_output", columnDefinition = "TEXT")
     private String actualOutput;
