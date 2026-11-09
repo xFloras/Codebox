@@ -120,9 +120,9 @@ curl -X POST http://localhost:8080/api/problems \
 - [x] JWT authentication and registration
 - [x] Problem entity, create and fetch endpoints
 - [x] Admin-only access for problem management
-- [ ] Test cases and submissions (entities, endpoints, statuses)
-- [ ] RabbitMQ producer and worker (dead-letter queue, retries)
-- [ ] Sandboxed code execution with TLE/MLE limits
+- [ ] Test cases and submissions (entities, endpoints, statuses) (WIP)
+- [ ] RabbitMQ producer and worker (dead-letter queue, retries) (WIP)
+- [x] Sandboxed code execution with TLE/MLE limits
 - [ ] Support for multiple languages
 - [ ] Integration tests (Testcontainers)
 - [ ] Problem listing with filtering and pagination
