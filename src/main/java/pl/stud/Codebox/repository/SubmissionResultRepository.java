@@ -1,9 +1,11 @@
 package pl.stud.Codebox.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import pl.stud.Codebox.models.Submission;
+import pl.stud.Codebox.models.SubmissionResult;
 
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
-public interface SubmissionResultRepository {
-
+public interface SubmissionResultRepository extends JpaRepository<SubmissionResult, Long> {
+    List<SubmissionResult> findBySubmissionOrderByTestCasePosition(Submission submission);
 }

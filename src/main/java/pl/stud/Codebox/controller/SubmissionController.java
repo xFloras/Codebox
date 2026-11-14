@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import pl.stud.Codebox.dto.SubmissionDetailResponse;
 import pl.stud.Codebox.dto.SubmissionRequest;
 import pl.stud.Codebox.dto.SubmissionResponse;
 import pl.stud.Codebox.models.User;
@@ -26,6 +27,11 @@ public class SubmissionController {
         SubmissionResponse created = submissionService.submit(slug, submissionRequest, user.getId());
         URI location = URI.create("/api/submissions/" + created.id());
         return ResponseEntity.created(location).body(created);
+    }
+
+    @GetMapping("/submissions/{id}")
+    public SubmissionDetailResponse getDetail(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        return submissionService.getDetail(id, user);
     }
 
 }
