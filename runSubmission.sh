@@ -6,9 +6,11 @@
 # $4 - Time limit per test
 
 SUBMISSION_DIR="$1"
-MEMORY_LIMIT="${2:-128m}"
+MEMORY_LIMIT="${2:-128}"
 CPU_LIMIT="${3:-1.0}"
 TIME_LIMIT_S="${4:-2}"
+
+HEAP_MB=$(( MEMORY_LIMIT > 128 ? MEMORY_LIMIT - 64 : MEMORY_LIMIT / 2 ))
 
 if [ -z "$SUBMISSION_DIR" ]; then
     echo "ERROR: Missing submission directory path."
@@ -22,6 +24,7 @@ docker run --rm --name "$NAME" \
   --user "$(id -u):$(id -g)" \
   --network none \
   --memory="$MEMORY_LIMIT" --memory-swap="$MEMORY_LIMIT" \
+  -e HEAP_MB="$HEAP_MB" \
   --cpus="$CPU_LIMIT" \
   --pids-limit 64 \
   --cap-drop ALL --security-opt no-new-privileges \
@@ -34,9 +37,12 @@ docker run --rm --name "$NAME" \
   sh -c '
     javac -d /tmp Main.java > out/compile.txt 2>&1 || exit 2
     for f in inputs/*.in; do
+    [ -e "f" ] || break
       n=$(basename "$f" .in)
       start=$(date +%s%N)
-      timeout "$TIME_LIMIT_S" java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xmx96m -cp /tmp Main \
+      time -v -o "out/$n.rusage" \
+      timeout "$TIME_LIMIT_S" java -XX:+UseSerialGC -XX:TieredStopAtLevel=1 \
+      -XX:-UsePerfData -XX:+ExitOnOutOfMemoryError -Xmx"${HEAP_MB}m" -cp /tmp Main \
         < "$f" > "out/$n.out" 2> "out/$n.err"
       echo $? > "out/$n.code"
       echo $(( ($(date +%s%N) - start) / 1000000 )) > "out/$n.time"

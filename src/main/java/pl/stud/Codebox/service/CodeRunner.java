@@ -89,12 +89,23 @@ public class CodeRunner {
                         position,
                         Integer.parseInt(readIfExists(out.resolve(position + ".code")).trim()),
                         Long.parseLong(readIfExists(out.resolve(position + ".time")).trim()),
+                        parseMaxRssKb(out.resolve(position + ".rusage")),
                         readIfExists(out.resolve(position + ".out")),
                         readIfExists(out.resolve(position + ".err"))
                 ));
             }
         }
         return new RunResult(true, compilerOutput, tests);
+    }
+
+    private static Long parseMaxRssKb(Path rusage) throws IOException {
+        if(!Files.exists(rusage)) return 0L;
+        for(String line : Files.readAllLines(rusage)) {
+            if(line.contains("Maximum resident set size")) {
+                return Long.parseLong(line.replaceAll("\\D", ""));
+            }
+        }
+        return 0L;
     }
 
     private static String readIfExists(Path p) throws IOException {
