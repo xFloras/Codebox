@@ -23,7 +23,7 @@ NAME="judge_$(basename "$SUBMISSION_DIR")"
 docker run --rm --name "$NAME" \
   --user "$(id -u):$(id -g)" \
   --network none \
-  --memory="$MEMORY_LIMIT" --memory-swap="$MEMORY_LIMIT" \
+  --memory="${MEMORY_LIMIT}m" --memory-swap="${MEMORY_LIMIT}m" \
   -e HEAP_MB="$HEAP_MB" \
   --cpus="$CPU_LIMIT" \
   --pids-limit 64 \
@@ -37,7 +37,7 @@ docker run --rm --name "$NAME" \
   sh -c '
     javac -d /tmp Main.java > out/compile.txt 2>&1 || exit 2
     for f in inputs/*.in; do
-    [ -e "f" ] || break
+    [ -e "$f" ] || break
       n=$(basename "$f" .in)
       start=$(date +%s%N)
       time -v -o "out/$n.rusage" \

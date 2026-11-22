@@ -34,7 +34,7 @@ public class CodeRunner {
         ProcessBuilder pb = new ProcessBuilder(
                 scriptPath,
                 submissionPath.toAbsolutePath().toString(),
-                memoryLimitMb + "m",
+                String.valueOf(memoryLimitMb),
                 "1.0",
                 String.valueOf(timeLimitS)
         );
