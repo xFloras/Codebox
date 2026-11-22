@@ -1,5 +1,6 @@
 package pl.stud.Codebox;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
@@ -9,12 +10,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.RabbitMQContainer;
 import org.testcontainers.junit.jupiter.Container;
+import pl.stud.Codebox.helpers.AuthHelpers;
+import pl.stud.Codebox.helpers.ProblemHelpers;
+import pl.stud.Codebox.repository.UserRepository;
 import tools.jackson.databind.ObjectMapper;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
-public abstract class AbstractIntegrationtest {
+public abstract class AbstractIntegrationTest {
 
     @Container
     @ServiceConnection
@@ -31,4 +36,16 @@ public abstract class AbstractIntegrationtest {
 
     @Autowired protected MockMvc mvc;
     @Autowired protected ObjectMapper json;
+    @Autowired protected UserRepository userRepository;
+
+    protected AuthHelpers auth;
+    protected ProblemHelpers problems;
+
+    @BeforeEach
+    void initHelpers() {
+        auth = new AuthHelpers(mvc, json, userRepository);
+        problems = new ProblemHelpers(mvc, json);
+    }
+
+
 }
