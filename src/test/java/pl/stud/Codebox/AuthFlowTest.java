@@ -9,13 +9,12 @@ import pl.stud.Codebox.dto.UserRegisterRequest;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.http.MediaType.APPLICATION_CBOR;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class AuthFlowTest extends AbstractIntegrationtest {
+class AuthFlowTest extends AbstractIntegrationTest {
 
     @Test
     void signupThenLoginReturnsToken() throws Exception {
