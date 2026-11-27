@@ -43,5 +43,5 @@ server:
 
 security:
   jwt:
-    secret_key: ${SECURITY_JWT_SECRET_KEY}
+    secret-key: ${SECURITY_JWT_SECRET_KEY}
     expiration: ${SECURITY_JWT_EXPIRATION:3600000} # 1 hour
