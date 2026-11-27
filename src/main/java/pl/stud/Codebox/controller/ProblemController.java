@@ -16,9 +16,8 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class ProblemController {
     private final ProblemService problemService;
-    //TODO: only admin can add problems(will be done after implementing jwt)
     @PostMapping
-    public ResponseEntity<ProblemResponse> addProblem(@RequestBody ProblemRequest request) {
+    public ResponseEntity<ProblemResponse> addProblem(@Valid @RequestBody ProblemRequest request) {
         ProblemResponse createdProblem = problemService.addProblem(request);
         /*
         URI location = ServletUriComponentsBuilder
@@ -27,7 +26,7 @@ public class ProblemController {
                 .buildAndExpand(createdProblem.slug())
                 .toUri();
          */
-        URI location = URI.create("/api/problems" + createdProblem.slug());
+        URI location = URI.create("/api/problems/" + createdProblem.slug());
         return ResponseEntity.created(location).body(createdProblem);
     }
 
