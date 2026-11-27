@@ -45,3 +45,7 @@ security:
   jwt:
     secret-key: ${SECURITY_JWT_SECRET_KEY}
     expiration: ${SECURITY_JWT_EXPIRATION:3600000} # 1 hour
+
+codebox:
+  runner:
+    script: ${CODEBOX_RUNNER_SCRIPT_PATH:./runSubmission.sh}
